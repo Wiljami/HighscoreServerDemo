@@ -61,6 +61,6 @@ public class HighscoredemoApplication implements CommandLineRunner {
 
 	@RequestMapping("get/")
 	public Iterable<HighScoreEntry> getScores() {
-		return highScoreRepo.findAll();
+		return highScoreRepo.findTop10ByOrderByScoreDesc();
 	}
 }
