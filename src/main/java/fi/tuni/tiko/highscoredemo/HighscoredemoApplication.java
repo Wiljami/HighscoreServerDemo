@@ -60,7 +60,12 @@ public class HighscoredemoApplication implements CommandLineRunner {
 
 
 	@RequestMapping("get/")
-	public Iterable<HighScoreEntry> getScores() {
-		return highScoreRepo.findTop10ByOrderByScoreDesc();
+	public Iterable<HighScoreEntryStub> getScores() {
+		List<HighScoreEntry> highScoreEntries = highScoreRepo.findTop10ByOrderByScoreDesc();
+		List<HighScoreEntryStub> highScoreEntryStubs = new ArrayList<>();
+		for (HighScoreEntry entry : highScoreEntries) {
+			highScoreEntryStubs.add(new HighScoreEntryStub(entry));
+		}
+		return highScoreEntryStubs;
 	}
 }
