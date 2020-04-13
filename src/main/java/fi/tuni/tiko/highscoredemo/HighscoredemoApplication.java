@@ -7,10 +7,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.util.UriComponents;
 import org.springframework.web.util.UriComponentsBuilder;
 
@@ -58,14 +55,34 @@ public class HighscoredemoApplication implements CommandLineRunner {
 		return new ResponseEntity<Void>(headers, HttpStatus.CREATED);
 	}
 
+	@RequestMapping(value = "/name={name}&score={score}&user={user}&password={password}", method = RequestMethod.POST)
+	public void id(
+			@PathVariable(value = "name") String name,
+			@PathVariable(value = "score") int score,
+			@PathVariable(value = "user") String user,
+			@PathVariable(value = "password") String password) {
+
+		System.out.println(name);
+		System.out.println(score);
+		System.out.println(user);
+		System.out.println(password);
+	}
+
+
+	@RequestMapping(value = "", method = RequestMethod.POST)
+	public void test() {
+		System.out.println("hellurei");
+	}
 
 	@RequestMapping("get/")
-	public Iterable<HighScoreEntryStub> getScores() {
-		List<HighScoreEntry> highScoreEntries = highScoreRepo.findTop10ByOrderByScoreDesc();
-		List<HighScoreEntryStub> highScoreEntryStubs = new ArrayList<>();
-		for (HighScoreEntry entry : highScoreEntries) {
-			highScoreEntryStubs.add(new HighScoreEntryStub(entry));
-		}
-		return highScoreEntryStubs;
+	public String getScores() {
+
+		String response = "{\"message\": \"\", \"2\": [\"Jussi\", 11200], \"3\": [\"Ville\", 10212], \"4\":\n" +
+				"[\"Sami\", 10011], \"5\": [\"Sami\", 10011], \"6\": [\"Sami\", 10010], \"1\":\n" +
+				"[\"Jussi\", 11200], \"8\": [\"Sami\", 10001], \"9\": [\"Sami\", 10000],\n" +
+				"\"10\": [\"Samppa\", 9889], \"7\": [\"Sami\", 10010], \"error\": 0, \"count\":\n" +
+				"10} ";
+
+		return response;
 	}
 }
